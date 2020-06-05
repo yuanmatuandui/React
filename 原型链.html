@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>海贼王</title>
+</head>
+<body>
+    <script>
+        function Ar(age) {
+            this.age = age
+        }    
+        Ar.prototype.sing = function(){
+            console.log(this);
+        }
+        var dkj = new Ar(12);
+        // 原型对象 在原型链上
+        // 构造函数 的 prototype 指向 实例对象 的 __proto__ 
+        // 构造函数 的 prototype 的 prototype 的 __proto__ == object.prototype.__proto__
+
+        // 构造函数的 __proto__ 对应的是 Object.原型对象
+        dkj.sing();
+    </script>
+</body>
+</html>

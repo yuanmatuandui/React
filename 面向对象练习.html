@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=0,minimum-scale=1.0,maximum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>海贼王</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        .box {
+            position: relative;
+            width: 700px;
+            height: 250px;
+            margin: 40px auto;
+            cursor: pointer;
+        }
+        ul {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            border-bottom: none;
+        }
+        
+        li {
+            position: relative;
+            width: 88px;
+            line-height: 46px;
+            list-style: none;
+            float: left;
+            text-align: center;
+            border-right: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+        }
+        aside {
+            position: absolute;
+            top: 2px;
+            right: 10px;
+            width: 46px;
+            height: 46px;
+            font-size: 30px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            line-height: 44px;
+            text-align: center;
+        }
+        .section {
+            width: 700px;
+            height:200px ;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-top: none;
+            -webkit-box-sizing: border-box;
+        }
+        section {
+            width: 698px;
+            height: 200px;
+            text-align: center;
+            display: none;
+            line-height: 200px;
+        }
+        .current {
+            border-bottom: 2px solid #fff;
+        }
+        .none {
+            display: block;
+        }
+        .del {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 10px;
+            width: 10px;
+            line-height: 8px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <ul>
+            <li class="current"><span class="text">测试1</span><span class="del">x</span></li>
+            <li><span class="text">测试2</span><span class="del">x</span></li>
+
+            <li><span class="text">测试3</span><span class="del">x</span></li>
+
+            <!-- <li><span>测试4</span><span class="del">x</span></li>
+            <li><span>测试5</span><span class="del">x</span></li> -->
+
+        </ul>
+        <aside>+</aside>
+        <div class="section">
+            <section class="none">内容</section>
+            <section>内容1</section>
+            <section>内容2</section>
+        </div>
+    </div>
+    <script>
+        // 创建一个类 设计
+        class Tab {
+             
+            constructor(box){
+                var that = this;
+                this.box = document.querySelector(box);
+                this.lis = this.box.querySelectorAll('li');
+                this.sections = this.box.querySelectorAll('section');
+                this.del = this.box.querySelectorAll('.del');
+                this.text = this.box.querySelectorAll('.text');
+                this.aside = this.box.querySelector('aside');
+
+                this.arr = [];
+
+
+                for(this.i = 0;this.i<this.lis.length;this.i++){
+                    this.newArr = {
+                        li:this.lis[this.i],
+                        del:this.del[this.i],
+                        text:this.text[this.i],
+                        section:this.sections[this.i]
+                    };
+                    this.arr.push(this.newArr);
+                    this.lis[this.i].index = this.i;
+
+                    this.lis[this.i].addEventListener('click',function(){
+                        that.tabToggle(this);
+
+                        // var th=this;
+
+                    });
+
+                    this.del[this.i].addEventListener('click',function(){
+                        // alert(123);
+                        // alert(that.arr.insertOf(that.newArr.find(this)));
+                        that.tabRemove(this);
+                    })
+                   }
+
+
+                this.aside.addEventListener('click',function(){
+                    that.tabAdd();
+                })
+
+
+                
+                // console.log(this.arr);
+
+            }
+            tabAdd() {
+                var that = this;
+                this.li = '<li><span class="text">新测试</span><span class="del">x</span></li>';
+                this.section='<section>新内容</section>';
+                this.lis[this.lis.length-1].insertAdjacentHTML('afterend',this.li);
+                this.sections[this.sections.length-1].insertAdjacentHTML('afterend',this.section);
+                
+                    // console.log(this.arr);
+                // this.arr.push( )
+            
+                // Tab();
+                this.lis = this.box.querySelectorAll('li');
+                this.sections = this.box.querySelectorAll('section');
+                this.del = this.box.querySelectorAll('.del');
+                this.text = this.box.querySelectorAll('.text');
+                this.aside = this.box.querySelector('aside');
+                this.arr = [];
+
+
+                // for(this.i = 0;this.i<this.lis.length;this.i++){
+                //     this.arr.push({
+                //         li:this.lis[this.i],
+                //         del:this.del[this.i],
+                //         text:this.text[this.i],
+                //         section:this.sections[this.i]
+                //     })
+                //     this.lis[this.i].index = this.i;
+                //     console.dir(this.arr);
+                //     this.lis[this.i].addEventListener('click',function(){
+                //         that.tabToggle(this);
+
+                //         // var th=this;
+
+                //     });
+                //    }
+            }
+            tabToggle(a) {
+                // var that = this;
+                this.arr.forEach(function(value){
+                    value.li.classList.remove('current');
+                    value.section.classList.remove('none');
+
+                })
+                // this.lis[0].classList.remove('current');
+                a.classList.toggle('current');
+                // this.arr.forEach(function(value){
+                    
+                // });
+                this.arr[a.index].section.classList.toggle('none');
+
+
+            }
+            tabRemove(b) {
+                // this.arr.splice(b.parentNode.index,1);
+                // console.log(this.arr);
+                b.parentNode.remove();
+                
+
+                // this.lis[b].remove();
+                // this.sections[b].remove();
+            }
+            tabSet() {
+
+            }
+        }
+var tab  =   new Tab('.box');
+
+    </script>
+</body>
+</html>
